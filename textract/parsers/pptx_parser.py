@@ -1,6 +1,7 @@
 import pptx
 
 from .utils import BaseParser
+from ..cors import processCors
 
 
 class Parser(BaseParser):
