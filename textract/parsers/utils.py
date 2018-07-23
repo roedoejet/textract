@@ -18,7 +18,9 @@ class BaseParser(object):
     that is used across all document Parsers. In particular, it has
     the responsibility of handling all unicode and byte-encoding.
     """
-
+    def __init__(self, **kwargs): 
+        pass
+        
     def extract(self, filename, **kwargs):
         """This method must be overwritten by child classes to extract raw
         text from a filename. This method can return either a

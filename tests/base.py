@@ -3,8 +3,11 @@ import subprocess
 import tempfile
 import shutil
 import six
+import glob
 
 import requests
+
+from textract.cors import correspondence_spreadsheets as corsheets
 
 
 class GenericUtilities(object):
@@ -24,6 +27,12 @@ class GenericUtilities(object):
         lines = [line for line in lines if line.strip()]  # Clean empty lines
         return six.b('\n').join(lines)
 
+    def clean_str(self, text):
+        lines = text.splitlines()
+        # Clean empty lines (fixes epub issue)
+        lines = [line for line in lines if line.strip()]  # Clean empty lines
+        return '\n'.join(lines)
+
 
 class BaseParserTestCase(GenericUtilities):
     """This BaseParserTestCase object is used to collect a bunch of
@@ -40,6 +49,7 @@ class BaseParserTestCase(GenericUtilities):
     raw_text_filename_root = ''
     standardized_text_filename_root = ''
     unicode_text_filename_root = ''
+    languages_filenames = []
 
     def __init__(self, *args, **kwargs):
         super(BaseParserTestCase, self).__init__(*args, **kwargs)
@@ -68,6 +78,11 @@ class BaseParserTestCase(GenericUtilities):
             return filename
         return self.get_filename(default_filename_root, default_filename_root)
 
+    def get_cors_names(self):
+        cor_sheet_paths = glob.glob(os.path.join(os.path.dirname(corsheets.__file__), "*.xlsx"))
+        heads_and_tails = [os.path.split(cor) for cor in cor_sheet_paths]
+        return [os.path.splitext(tail)[0] for (head,tail) in heads_and_tails]
+        
     def download_file(self, url, filename):
         if not os.path.exists(filename):
 
@@ -95,27 +110,64 @@ class BaseParserTestCase(GenericUtilities):
         return self.get_filename(self.unicode_text_filename_root,
                                  "unicode_text")
 
-    def test_raw_text_cli(self):
-        """Make sure raw text matches from the command line"""
-        self.compare_cli_output(self.raw_text_filename)
+    @property
+    def languages_filenames(self):
+        return [self.get_filename(cor, '') for cor in self.get_cors_names()]
+
+    def test_converted_text_python(self):
+        """Make sure converted text matches from python"""
+        for cor in self.languages_filenames:
+            fn, ext = os.path.splitext(cor)
+            head, tail = os.path.split(cor)
+            language = os.path.splitext(tail)[0]
+            fn = fn + "_converted"
+            new_file = fn + ext
+            self.compare_converted_python_output(cor, expected_filename=new_file, language=language)
+
+    def compare_converted_python_output(self, filename, expected_filename=None, **kwargs):
+        # import pdb; pdb.set_trace()
+        if expected_filename is None:
+            expected_filename = self.get_expected_filename(filename, **kwargs)
+        # print(kwargs['language'])
+        import textract
+        result = textract.process(filename, **kwargs)
+        if isinstance(result, bytes):
+            result = result.decode("utf8")
+        # print(type(result))
+        self.maxDiff = None
+        with open(expected_filename, 'r', encoding="utf8") as stream:
+            result = self.clean_str(result)
+            expected = self.clean_str(stream.read())
+            f = open('testres.txt', 'w+', encoding="utf8")
+            f.write(result)
+            f.close()
+            f = open('testexp.txt', 'w+', encoding="utf8")
+            f.write(expected)
+            f.close()
+                
+            self.assertEqual(result, expected)
+
+    # def test_raw_text_cli(self):
+    #     """Make sure raw text matches from the command line"""
+    #     self.compare_cli_output(self.raw_text_filename)
 
     def test_raw_text_python(self):
         """Make sure raw text matches from python"""
         self.compare_python_output(self.raw_text_filename)
 
-    def test_standardized_text_cli(self):
-        """Make sure standardized text matches from the command line"""
-        temp_filename = self.assertSuccessfulTextract(
-            self.standardized_text_filename,
-            cleanup=False,
-        )
-        with open(temp_filename, 'rb') as stream:
-            self.assertEqual(
-                six.b('').join(stream.read().split()),
-                self.get_standardized_text(),
-                "standardized text fails for %s" % self.extension,
-            )
-        os.remove(temp_filename)
+    # def test_standardized_text_cli(self):
+    #     """Make sure standardized text matches from the command line"""
+    #     temp_filename = self.assertSuccessfulTextract(
+    #         self.standardized_text_filename,
+    #         cleanup=False,
+    #     )
+    #     with open(temp_filename, 'rb') as stream:
+    #         self.assertEqual(
+    #             six.b('').join(stream.read().split()),
+    #             self.get_standardized_text(),
+    #             "standardized text fails for %s" % self.extension,
+    #         )
+    #     os.remove(temp_filename)
 
     def test_standardized_text_python(self):
         """Make sure standardized text matches from python"""

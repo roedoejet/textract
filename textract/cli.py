@@ -8,7 +8,7 @@ import os
 import pkgutil
 import sys
 import six
-import re
+import regex as re
 import glob
 
 import argcomplete
@@ -74,6 +74,12 @@ def get_parser():
     parser.add_argument(
         '-o', '--output', type=FileType('wb'), default='-',
         help='Output raw text in this file',
+    )
+    parser.add_argument(
+        '-l', '--language', type=str,
+        help='Specify language for conversion. Can be either user defined'
+             ' in the form of a path to an xlsx or from a predefined correspondence'
+            ' list. For a full list please visit https://github.com/roedoejet/convertextract/',
     )
     parser.add_argument(
         '-O', '--option', type=str, action=AddToNamespaceAction,

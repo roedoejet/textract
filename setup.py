@@ -43,7 +43,7 @@ dependencies, dependency_links = parse_requirements(requirements_filename)
 
 setup(
     name=textract.__name__,
-    version="1.6.1",
+    version=textract.VERSION,
     description="extract text from any document. no muss. no fuss.",
     long_description=long_description,
     url=github_url,
@@ -55,6 +55,7 @@ setup(
     packages=[
         'textract',
         'textract.parsers',
+        'textract.cors'
     ],
     install_requires=dependencies,
     dependency_links=dependency_links,

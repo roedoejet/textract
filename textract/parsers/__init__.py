@@ -11,9 +11,9 @@ from .. import exceptions
 
 # Dictionary structure for synonymous file extension types
 EXTENSION_SYNONYMS = {
-    ".jpeg": ".jpg",
-    ".tff": ".tiff",
-    ".tif": ".tiff",
+    # ".jpeg": ".jpg",
+    # ".tff": ".tiff",
+    # ".tif": ".tiff",
     ".htm": ".html",
     "": ".txt",
     ".log": ".txt",
@@ -73,7 +73,10 @@ def process(filename, encoding=DEFAULT_ENCODING, extension=None, **kwargs):
 
     # do the extraction
 
-    parser = filetype_module.Parser()
+    parser = filetype_module.Parser(**kwargs)
+    # print("encoding is " + encoding)
+    # print(type(parser.process(filename, encoding, **kwargs)))
+    # print(parser.process(filename, encoding, **kwargs))
     return parser.process(filename, encoding, **kwargs)
 
 
@@ -82,14 +85,12 @@ def _get_available_extensions():
     tab-completion and exception handling.
     """
     extensions = []
-
+    
     # from filenames
     parsers_dir = os.path.join(os.path.dirname(__file__))
     glob_filename = os.path.join(parsers_dir, "*" + _FILENAME_SUFFIX + ".py")
-    ext_re = re.compile(glob_filename.replace('*', "(?P<ext>\w+)"))
     for filename in glob.glob(glob_filename):
-        ext_match = ext_re.match(filename)
-        ext = ext_match.groups()[0]
+        ext = filename.split("_")[0]
         extensions.append(ext)
         extensions.append('.' + ext)
 
