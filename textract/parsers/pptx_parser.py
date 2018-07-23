@@ -6,14 +6,11 @@ from .utils import BaseParser
 class Parser(BaseParser):
     """Extract text from pptx file using python-pptx
     """
-    def __init__(self, **kwargs):
-        print(kwargs)
 
     def extract(self, filename, **kwargs):
         if "language" in kwargs and kwargs['language']:
             cors = processCors(kwargs["language"])
-        else:
-            print("Extracting unconverted text because no conversion language was specified.")
+        converted_filename = filename[:-5] + '_converted.pptx'
         presentation = pptx.Presentation(filename)
         text_runs = []
         for slide in presentation.slides:
@@ -22,13 +19,8 @@ class Parser(BaseParser):
                     continue
                 for paragraph in shape.text_frame.paragraphs:
                     for run in paragraph.runs:
-                        text_runs.append(run.text)
+                        if cors:
+                            run.text = cors.apply_rules(run.text)
+                            text_runs.append(run.text)
+        presentation.save(converted_filename)
         return '\n\n'.join(text_runs)
-
-
-
-        with open(filename) as stream:
-            text = stream.read()
-            if "language" in kwargs and kwargs['language']:
-                text = cors.apply_rules(text)
-            return text

@@ -75,6 +75,7 @@ def get_parser():
         '-o', '--output', type=FileType('wb'), default='-',
         help='Output raw text in this file',
     )
+    parser.add_argument('--no-write', dest='no_write', action='store_true', help="Disable default writing of converted file.")
     parser.add_argument(
         '-l', '--language', type=str,
         help='Specify language for conversion. Can be either user defined'
