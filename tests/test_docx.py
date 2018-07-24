@@ -4,8 +4,8 @@ import os
 from . import base
 
 
-class DocxTestCase(base.BaseParserTestCase, unittest.TestCase):
-    extension = 'docx'
+# class DocxTestCase(base.BaseParserTestCase, unittest.TestCase):
+#     extension = 'docx'
 
     # def test_tables(self):
     #     """make sure table output is correct"""
