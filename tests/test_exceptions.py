@@ -43,15 +43,15 @@ class ExceptionTestCase(base.GenericUtilities, unittest.TestCase):
         with self.assertRaises(MissingFileError):
             convertextract.process(filename)
 
-    def test_shell_parser_run(self):
-        """get a useful error message when a dependency is missing"""
-        from convertextract.parsers import utils
-        from convertextract.parsers import exceptions
-        parser = utils.ShellParser()
-        try:
-            # There shouldn't be a command on the path matching a random uuid
-            parser.run([str(uuid.uuid4())])
-        except exceptions.ShellError as e:
-            self.assertTrue(e.is_not_installed())
-        else:
-            self.assertTrue(False, "Expected ShellError")
+    # def test_shell_parser_run(self):
+    #     """get a useful error message when a dependency is missing"""
+    #     from convertextract.parsers import utils
+    #     from convertextract.parsers import exceptions
+    #     parser = utils.ShellParser()
+    #     try:
+    #         # There shouldn't be a command on the path matching a random uuid
+    #         parser.run([str(uuid.uuid4())])
+    #     except exceptions.ShellError as e:
+    #         self.assertTrue(e.is_not_installed())
+    #     else:
+    #         self.assertTrue(False, "Expected ShellError")

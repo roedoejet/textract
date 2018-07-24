@@ -114,46 +114,13 @@ class BaseParserTestCase(GenericUtilities):
     def languages_filenames(self):
         return [self.get_filename(cor, '') for cor in self.get_cors_names()]
 
-    def test_converted_text_python(self):
-        """Make sure converted text matches from python"""
-        for cor in self.languages_filenames:
-            fn, ext = os.path.splitext(cor)
-            head, tail = os.path.split(cor)
-            language = os.path.splitext(tail)[0]
-            fn = fn + "_converted"
-            new_file = fn + ext
-            self.compare_converted_python_output(cor, expected_filename=new_file, language=language)
-
-    def compare_converted_python_output(self, filename, expected_filename=None, **kwargs):
-        # import pdb; pdb.set_trace()
-        if expected_filename is None:
-            expected_filename = self.get_expected_filename(filename, **kwargs)
-        # print(kwargs['language'])
-        import convertextract
-        result = convertextract.process(filename, **kwargs)
-        if isinstance(result, bytes):
-            result = result.decode("utf8")
-        # print(type(result))
-        self.maxDiff = None
-        with open(expected_filename, 'r', encoding="utf8") as stream:
-            result = self.clean_str(result)
-            expected = self.clean_str(stream.read())
-            f = open('testres.txt', 'w+', encoding="utf8")
-            f.write(result)
-            f.close()
-            f = open('testexp.txt', 'w+', encoding="utf8")
-            f.write(expected)
-            f.close()
-                
-            self.assertEqual(result, expected)
-
     # def test_raw_text_cli(self):
     #     """Make sure raw text matches from the command line"""
     #     self.compare_cli_output(self.raw_text_filename)
 
-    def test_raw_text_python(self):
-        """Make sure raw text matches from python"""
-        self.compare_python_output(self.raw_text_filename)
+    # def test_raw_text_python(self):
+    #     """Make sure raw text matches from python"""
+    #     self.compare_python_output(self.raw_text_filename)
 
     # def test_standardized_text_cli(self):
     #     """Make sure standardized text matches from the command line"""
@@ -169,15 +136,15 @@ class BaseParserTestCase(GenericUtilities):
     #         )
     #     os.remove(temp_filename)
 
-    def test_standardized_text_python(self):
-        """Make sure standardized text matches from python"""
-        import convertextract
-        result = convertextract.process(self.standardized_text_filename)
-        self.assertEqual(
-            six.b('').join(result.split()),
-            self.get_standardized_text(),
-            "standardized text fails for %s" % self.extension,
-        )
+    # def test_standardized_text_python(self):
+    #     """Make sure standardized text matches from python"""
+    #     import convertextract
+    #     result = convertextract.process(self.standardized_text_filename)
+    #     self.assertEqual(
+    #         six.b('').join(result.split()),
+    #         self.get_standardized_text(),
+    #         "standardized text fails for %s" % self.extension,
+    #     )
 
     # def test_unicode_text_cli(self):
     #     """Make sure unicode text matches from the command line"""
