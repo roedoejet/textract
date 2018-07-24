@@ -1,6 +1,5 @@
 from .utils import BaseParser
 from ..cors import processCors
-import chardet
 
 class Parser(BaseParser):
     """Parse ``.txt`` files"""

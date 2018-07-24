@@ -21,7 +21,7 @@ Some source libraries need to be installed for different operating systems to su
 
 ## Basic CLI Use
 
-Basic Textract functions are preserved. Please visit <http://textract.readthedocs.org> for documentation.
+Some basic Textract functions are preserved. Please visit <http://textract.readthedocs.org> for documentation.
 
 #### Converting a file based on xlsx
 convertextract requires two arguments:
@@ -48,11 +48,11 @@ Here, this correspondence sheet (do not include headers like "replace with" or "
 
 #### Supported conversions
 
-As of Version 1.0.4, the following conversions are supported:
+As of Version 2.0, the following conversions are supported:
 
 * Heiltsuk Doulos Font -> Unicode
 ```{r, engine='python', count_lines}
-convertextract path/to/foo.docx -l heiltsuk_Doulos
+convertextract path/to/foo.docx -l heiltsuk_doulos
 ```
 
 * Heiltsuk Times Font -> Unicode
@@ -62,7 +62,12 @@ convertextract path/to/foo.docx -l heiltsuk_times
 
 * Tsilhqot'in Doulos Font -> Unicode
 ```{r, engine='python', count_lines}
-convertextract path/to/foo.docx -l tssilhqut-in_Doulos
+convertextract path/to/foo.docx -l tssilhqut-in_doulos
+```
+
+* Navajo Times Font -> Unicode
+```{r, engine='python', count_lines}
+convertextract path/to/foo.docx -l navajo_times
 ```
 
 #### Using Regular Expressions

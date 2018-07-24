@@ -44,6 +44,7 @@ dependencies, dependency_links = parse_requirements(requirements_filename)
 setup(
     name=convertextract.__name__,
     version=convertextract.VERSION,
+    python_requires='>3.4',
     description="Arbitrary transliterations on Microsoft Office documents",
     long_description=long_description,
     url=github_url,
