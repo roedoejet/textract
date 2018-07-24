@@ -1,12 +1,8 @@
 # convertextract
 ========
 
-|Build Status| |Version| |Test Coverage|
-
 [![Build Status](https://travis-ci.org/roedoejet/convertextract.svg?branch=master)](https://travis-ci.org/roedoejet/convertextract)
-
 [![Version](https://img.shields.io/pypi/v/convertextract.svg)](https://warehouse.python.org/project/convertextract/)
-
 [![Test Coverage](https://coveralls.io/repos/deanmalmgren/textract/badge.png)](https://coveralls.io/r/roedoejet/convertextract)
 
 
