@@ -24,6 +24,6 @@ class Parser(BaseParser):
                         if "language" in kwargs and kwargs['language']:
                             run.text = cors.apply_rules(run.text)
                         text_runs.append(run.text)
-        if "language" in kwargs and kwargs["language"] and not kwargs['no_write']:
+        if "language" in kwargs and kwargs["language"] and "no_write" in kwargs and not kwargs['no_write']:
             presentation.save(converted_filename)
         return '\n\n'.join(text_runs)

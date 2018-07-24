@@ -33,6 +33,6 @@ class Parser(BaseParser):
                         new_output.append(value)
                 if new_output:
                     output += u' '.join(new_output) + u'\n'
-        if "language" in kwargs and kwargs["language"] and not kwargs['no_write']:
+        if "language" in kwargs and kwargs["language"] and "no_write" in kwargs and not kwargs['no_write']:
             workbook.save(converted_filename)
         return output
