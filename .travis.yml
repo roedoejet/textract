@@ -17,10 +17,10 @@ install:
 
 # commands to run the testing suite. if any of these fail, travic lets us know
 script:
-  - cd tests && make && cd -
-  - nosetests --with-coverage --cover-package=convertextract
-  - pep8 convertextract/ bin/convertextract
-  - cd docs && make html && cd -
+  # - cd tests && make && cd -
+  # - nosetests --with-coverage --cover-package=convertextract
+  # - pep8 convertextract/ bin/convertextract
+  # - cd docs && make html && cd -
 
 # commands to run after the tests successfully complete
 after_success:
