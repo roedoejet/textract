@@ -11,7 +11,7 @@ Extract and find/replace text based on arbitrary correspondences. This library i
 # Documentation
 
 ## Installation
-To install, you must have Python 2.7 and pip installed.
+To install, you must have Python 2.7 or 3.4+ and pip installed.
 ```{r, engine='python', count_lines}
 pip install convertextract
 ```
