@@ -4,8 +4,8 @@ import os
 from . import base
 
 
-# class HtmlTestCase(base.BaseParserTestCase, unittest.TestCase):
-#     extension = 'html'
+class HtmlTestCase(base.BaseParserTestCase, unittest.TestCase):
+    extension = 'html'
 
 #     def test_table_text_python(self):
 #         """Make sure tables in html look pretty through python"""

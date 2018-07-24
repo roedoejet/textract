@@ -15,7 +15,7 @@ class TxtTestCase(base.BaseParserTestCase, unittest.TestCase):
             head, tail = os.path.split(cor)
             language = os.path.splitext(tail)[0]
             fn = fn + "_converted"
-            new_file = fn + ".txt"
+            new_file = fn + ext
             self.compare_converted_python_output(cor, expected_filename=new_file, language=language)
 
     def compare_converted_python_output(self, filename, expected_filename=None, **kwargs):

@@ -118,9 +118,9 @@ class BaseParserTestCase(GenericUtilities):
     #     """Make sure raw text matches from the command line"""
     #     self.compare_cli_output(self.raw_text_filename)
 
-    # def test_raw_text_python(self):
-    #     """Make sure raw text matches from python"""
-    #     self.compare_python_output(self.raw_text_filename)
+    def test_raw_text_python(self):
+        """Make sure raw text matches from python"""
+        self.compare_python_output(self.raw_text_filename)
 
     # def test_standardized_text_cli(self):
     #     """Make sure standardized text matches from the command line"""
@@ -136,15 +136,17 @@ class BaseParserTestCase(GenericUtilities):
     #         )
     #     os.remove(temp_filename)
 
-    # def test_standardized_text_python(self):
-    #     """Make sure standardized text matches from python"""
-    #     import convertextract
-    #     result = convertextract.process(self.standardized_text_filename)
-    #     self.assertEqual(
-    #         six.b('').join(result.split()),
-    #         self.get_standardized_text(),
-    #         "standardized text fails for %s" % self.extension,
-    #     )
+    def test_standardized_text_python(self):
+        """Make sure standardized text matches from python"""
+        import convertextract
+        result = convertextract.process(self.standardized_text_filename)
+        if isinstance(result, bytes):
+            result = result.decode("utf8")
+        self.assertEqual(
+            ''.join(result.split()),
+            self.get_standardized_text(),
+            "standardized text fails for %s" % self.extension,
+        )
 
     # def test_unicode_text_cli(self):
     #     """Make sure unicode text matches from the command line"""
@@ -172,13 +174,11 @@ class BaseParserTestCase(GenericUtilities):
             "standardized_text.txt"
         )
         if os.path.exists(filename):
-            with open(filename, 'rb') as stream:
+            with open(filename, 'r', encoding='utf8') as stream:
                 standardized_text = stream.read()
         else:
-            standardized_text = six.b(
-                "the quick brown fox jumps over the lazy dog"
-            )
-        return six.b('').join(standardized_text.split())
+            standardized_text = "the quick brown fox jumps over the lazy dog"
+        return ''.join(standardized_text.split())
 
     def assertSuccessfulCommand(self, command):
         self.assertEqual(
@@ -221,12 +221,14 @@ class BaseParserTestCase(GenericUtilities):
     def compare_python_output(self, filename, expected_filename=None, **kwargs):
         if expected_filename is None:
             expected_filename = self.get_expected_filename(filename, **kwargs)
-
+        
         import convertextract
         result = convertextract.process(filename, **kwargs)
-        with open(expected_filename, 'rb') as stream:
-            result = self.clean_text(result)
-            expected = self.clean_text(stream.read())
+        if isinstance(result, bytes):
+            result = result.decode("utf8")
+        with open(expected_filename, 'r', encoding='utf8') as stream:
+            result = self.clean_str(result)
+            expected = self.clean_str(stream.read())
             self.assertEqual(result, expected)
 
 
