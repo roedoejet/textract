@@ -8,7 +8,7 @@ import os
 import pkgutil
 import sys
 import six
-import regex as re
+import re
 import glob
 
 import argcomplete
