@@ -36,7 +36,7 @@ class BaseParser(object):
 
     def process(self, filename, encoding, **kwargs):
         """Process ``filename`` and encode byte-string with ``encoding``. This
-        method is called by :func:`textract.parsers.process` and wraps
+        method is called by :func:`convertextract.parsers.process` and wraps
         the :meth:`.BaseParser.extract` method in `a delicious unicode
         sandwich <http://nedbatchelder.com/text/unipain.html>`_.
 
@@ -76,7 +76,7 @@ class ShellParser(BaseParser):
     def run(self, args):
         """Run ``command`` and return the subsequent ``stdout`` and ``stderr``
         as a tuple. If the command is not successful, this raises a
-        :exc:`textract.exceptions.ShellError`.
+        :exc:`convertextract.exceptions.ShellError`.
         """
 
         # run a subprocess and put the stdout and stderr on the pipe object

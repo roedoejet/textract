@@ -7,13 +7,13 @@ def pack():
 
 def dev():
     # uninstall
-    local('pip uninstall textract')
+    local('pip uninstall convertextract')
 
     # build the package
     pack()
 
     # reinstall
-    fn = "textract-" + "1.6.2" + ".tar.gz"
+    fn = "convertextract-" + "1.6.2" + ".tar.gz"
     local('pip install dist/' + fn)
 
     # local('python run.py')

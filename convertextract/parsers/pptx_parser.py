@@ -22,6 +22,6 @@ class Parser(BaseParser):
                     for run in paragraph.runs:
                         if cors:
                             run.text = cors.apply_rules(run.text)
-                            text_runs.append(run.text)
+                        text_runs.append(run.text)
         presentation.save(converted_filename)
         return '\n\n'.join(text_runs)

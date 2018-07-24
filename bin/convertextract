@@ -8,10 +8,10 @@ Command-line application.
 
 import sys
 
-from textract.cli import get_parser
-from textract import process
-from textract.exceptions import CommandLineError
-from textract.colors import red
+from convertextract.cli import get_parser
+from convertextract import process
+from convertextract.exceptions import CommandLineError
+from convertextract.colors import red
 
 
 # extract text

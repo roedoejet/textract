@@ -7,7 +7,7 @@ import glob
 
 import requests
 
-from textract.cors import correspondence_spreadsheets as corsheets
+from convertextract.cors import correspondence_spreadsheets as corsheets
 
 
 class GenericUtilities(object):
@@ -129,8 +129,8 @@ class BaseParserTestCase(GenericUtilities):
         if expected_filename is None:
             expected_filename = self.get_expected_filename(filename, **kwargs)
         # print(kwargs['language'])
-        import textract
-        result = textract.process(filename, **kwargs)
+        import convertextract
+        result = convertextract.process(filename, **kwargs)
         if isinstance(result, bytes):
             result = result.decode("utf8")
         # print(type(result))
@@ -171,8 +171,8 @@ class BaseParserTestCase(GenericUtilities):
 
     def test_standardized_text_python(self):
         """Make sure standardized text matches from python"""
-        import textract
-        result = textract.process(self.standardized_text_filename)
+        import convertextract
+        result = convertextract.process(self.standardized_text_filename)
         self.assertEqual(
             six.b('').join(result.split()),
             self.get_standardized_text(),
@@ -219,7 +219,7 @@ class BaseParserTestCase(GenericUtilities):
             "COMMAND FAILED: %(command)s" % locals()
         )
 
-    def assertSuccessfulTextract(self, filename, cleanup=True, **kwargs):
+    def assertSuccessfulConvertextract(self, filename, cleanup=True, **kwargs):
 
         # construct the option string
         option = self.get_cli_options(**kwargs)
@@ -227,7 +227,7 @@ class BaseParserTestCase(GenericUtilities):
         # run the command and make sure everything worked correctly
         temp_filename = self.get_temp_filename()
         self.assertSuccessfulCommand(
-            "textract %(option)s '%(filename)s' > %(temp_filename)s" % locals()
+            "convertextract %(option)s '%(filename)s' > %(temp_filename)s" % locals()
         )
         if cleanup:
             os.remove(temp_filename)
@@ -240,7 +240,7 @@ class BaseParserTestCase(GenericUtilities):
             expected_filename = self.get_expected_filename(filename, **kwargs)
 
         # run the command and make sure everything worked correctly
-        temp_filename = self.assertSuccessfulTextract(
+        temp_filename = self.assertSuccessfulConvertextract(
             filename,
             cleanup=False,
             **kwargs
@@ -255,8 +255,8 @@ class BaseParserTestCase(GenericUtilities):
         if expected_filename is None:
             expected_filename = self.get_expected_filename(filename, **kwargs)
 
-        import textract
-        result = textract.process(filename, **kwargs)
+        import convertextract
+        result = convertextract.process(filename, **kwargs)
         with open(expected_filename, 'rb') as stream:
             result = self.clean_text(result)
             expected = self.clean_text(stream.read())

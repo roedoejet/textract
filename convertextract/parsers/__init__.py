@@ -67,7 +67,7 @@ def process(filename, encoding=DEFAULT_ENCODING, extension=None, **kwargs):
     # supported
     try:
         filetype_module = importlib.import_module(
-            rel_module, 'textract.parsers'
+            rel_module, 'convertextract.parsers'
         )
     except ImportError:
         raise exceptions.ExtensionNotSupported(ext)

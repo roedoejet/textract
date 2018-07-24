@@ -3,7 +3,7 @@ import os
 import sys
 from setuptools import setup
 
-import textract
+import convertextract
 
 # get all of the scripts
 scripts = glob.glob("bin/*")
@@ -12,7 +12,7 @@ scripts = glob.glob("bin/*")
 with open("README.rst") as stream:
     long_description = stream.read()
 
-github_url = 'https://github.com/deanmalmgren/textract'
+github_url = 'https://github.com/roedoejet/convertextract'
 
 
 def parse_requirements(requirements_filename):
@@ -42,20 +42,22 @@ dependencies, dependency_links = parse_requirements(requirements_filename)
 
 
 setup(
-    name=textract.__name__,
-    version=textract.VERSION,
-    description="extract text from any document. no muss. no fuss.",
+    name=convertextract.__name__,
+    version=convertextract.VERSION,
+    description="Arbitrary transliterations on Microsoft Office documents",
     long_description=long_description,
     url=github_url,
     download_url="%s/archives/master" % github_url,
-    author='Dean Malmgren',
-    author_email='dean.malmgren@datascopeanalytics.com',
+    author='Aidan Pine',
+    author_email='info@mothetongues.org',
     license='MIT',
     scripts=scripts,
+    include_package_data=True,
     packages=[
-        'textract',
-        'textract.parsers',
-        'textract.cors'
+        'convertextract',
+        'convertextract.parsers',
+        'convertextract.cors',
+        'convertextract.cors.correspondence_spreadsheets'
     ],
     install_requires=dependencies,
     dependency_links=dependency_links,
