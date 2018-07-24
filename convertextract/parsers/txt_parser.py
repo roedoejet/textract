@@ -13,7 +13,7 @@ class Parser(BaseParser):
             self.cors = processCors(kwargs["language"])
             text = self.cors.apply_rules(text)
 
-            if not kwargs['no_write']:
+            if "language" in kwargs and kwargs["language"] and not kwargs['no_write']:
                 textfile = open(converted_filename, 'w', encoding='utf-8')
                 textfile.write(text)
                 textfile.close()

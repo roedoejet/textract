@@ -10,8 +10,9 @@ class Parser(BaseParser):
 
     def extract(self, filename, **kwargs):
         if "language" in kwargs and kwargs['language']:
+            converted_filename = filename[:-5] + '_converted.pptx'
             cors = processCors(kwargs["language"])
-        converted_filename = filename[:-5] + '_converted.pptx'
+
         presentation = pptx.Presentation(filename)
         text_runs = []
         for slide in presentation.slides:
@@ -23,5 +24,6 @@ class Parser(BaseParser):
                         if cors:
                             run.text = cors.apply_rules(run.text)
                         text_runs.append(run.text)
-        presentation.save(converted_filename)
+        if "language" in kwargs and kwargs["language"] and not kwargs['no_write']:
+            presentation.save(converted_filename)
         return '\n\n'.join(text_runs)
