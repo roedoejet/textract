@@ -21,7 +21,7 @@ class Parser(BaseParser):
                     continue
                 for paragraph in shape.text_frame.paragraphs:
                     for run in paragraph.runs:
-                        if cors:
+                        if "language" in kwargs and kwargs['language']:
                             run.text = cors.apply_rules(run.text)
                         text_runs.append(run.text)
         if "language" in kwargs and kwargs["language"] and not kwargs['no_write']:

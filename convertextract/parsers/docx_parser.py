@@ -16,7 +16,7 @@ class Parser(BaseParser):
         text_runs = []
         for paragraph in document.paragraphs:
             for run in paragraph.runs:
-                if cors:
+                if "language" in kwargs and kwargs['language']:
                     # this line prevents images from being erased
                     if run.text != "" and run.text != " ":
                         run.text = cors.apply_rules(run.text)

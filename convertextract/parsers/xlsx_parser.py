@@ -27,7 +27,7 @@ class Parser(BaseParser):
                     if value:
                         if isinstance(value, (int, float)):
                             value = six.text_type(value)
-                        if cors:
+                        if "language" in kwargs and kwargs['language']:
                             value = cors.apply_rules(value)
                             col.value = value
                         new_output.append(value)
