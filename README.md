@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/roedoejet/textract.svg?branch=master)](https://travis-ci.org/roedoejet/textract)
 [![Version](https://img.shields.io/pypi/v/convertextract.svg)](https://warehouse.python.org/project/convertextract/)
-[![Test Coverage](https://coveralls.io/repos/roedoejet/textract/badge.png)](https://coveralls.io/r/roedoejet/textract)
+[![Coverage Status](https://coveralls.io/repos/github/roedoejet/textract/badge.svg?branch=master)](https://coveralls.io/github/roedoejet/textract?branch=master)
 
 
 Extract and find/replace text based on arbitrary correspondences. This library is a fork from the Textract library by Dean Malmgren. https://github.com/deanmalmgren/textract
