@@ -17,9 +17,9 @@ install:
 
 # commands to run the testing suite. if any of these fail, travic lets us know
 script: 
-    - py.test
-#   - cd tests && make && cd -
-  # - nosetests --with-coverage --cover-package=convertextract
+    # - py.test
+    - cd tests && cd -
+    - nosetests --with-coverage --cover-package=convertextract
   # - pep8 convertextract/ bin/convertextract
   # - cd docs && make html && cd -
 
