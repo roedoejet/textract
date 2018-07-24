@@ -3,7 +3,6 @@ dist: trusty
 
 language: python
 python:
-  - "2.7"
   - "3.4"
 
 # install system dependencies here with apt-get.
@@ -19,8 +18,8 @@ install:
 # commands to run the testing suite. if any of these fail, travic lets us know
 script:
   - cd tests && make && cd -
-  - nosetests --with-coverage --cover-package=textract
-  - pep8 textract/ bin/textract
+  - nosetests --with-coverage --cover-package=convertextract
+  - pep8 convertextract/ bin/convertextract
   - cd docs && make html && cd -
 
 # commands to run after the tests successfully complete
